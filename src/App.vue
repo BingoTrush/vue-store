@@ -2,40 +2,7 @@
   <div id="app" name="app">
     <el-container>
       <!-- 顶部导航栏 -->
-      <div class="topbar">
-        <div class="nav">
-          <ul>
-            <li v-if="!this.$store.getters.getUser">
-              <el-button type="text" @click="login">登录</el-button>
-              <span class="sep">|</span>
-              <el-button type="text" @click="register = true">注册</el-button>
-            </li>
-            <li v-else>
-              欢迎
-              <el-popover placement="top" width="180" v-model="visible">
-                <p>确定退出登录吗？</p>
-                <div style="text-align: right; margin: 10px 0 0">
-                  <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                  <el-button type="primary" size="mini" @click="logout">确定</el-button>
-                </div>
-                <el-button type="text" slot="reference">{{this.$store.getters.getUser.userName}}</el-button>
-              </el-popover>
-            </li>
-            <li>
-              <router-link to="/order">我的订单</router-link>
-            </li>
-            <li>
-              <router-link to="/collect">我的收藏</router-link>
-            </li>
-            <li :class="getNum > 0 ? 'shopCart-full' : 'shopCart'">
-              <router-link to="/shoppingCart">
-                <i class="el-icon-shopping-cart-full"></i> 购物车
-                <span class="num">({{getNum}})</span>
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div class="topbar"></div>
       <!-- 顶部导航栏END -->
 
       <!-- 顶栏容器 -->
@@ -53,22 +20,11 @@
             </router-link>
           </div>
           <el-menu-item index="/">首页</el-menu-item>
-          <el-menu-item index="/goods">全部商品</el-menu-item>
+          <!-- <el-menu-item index="/goods">全部商品</el-menu-item> -->
           <el-menu-item index="/about">关于我们</el-menu-item>
-
-          <div class="so">
-            <el-input placeholder="请输入搜索内容" v-model="search">
-              <el-button slot="append" icon="el-icon-search" @click="searchClick"></el-button>
-            </el-input>
-          </div>
         </el-menu>
       </el-header>
       <!-- 顶栏容器END -->
-
-      <!-- 登录模块 -->
-      <MyLogin></MyLogin>
-      <!-- 注册模块 -->
-      <MyRegister :register="register" @fromChild="isRegister"></MyRegister>
 
       <!-- 主要区域容器 -->
       <el-main>
@@ -82,13 +38,13 @@
       <el-footer>
         <div class="footer">
           <div class="ng-promise-box">
-            <div class="ng-promise">
+            <!-- <div class="ng-promise">
               <p class="text">
                 <a class="icon1" href="javascript:;">7天无理由退换货</a>
                 <a class="icon2" href="javascript:;">满99元全场免邮</a>
                 <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
               </p>
-            </div>
+            </div> -->
           </div>
           <div class="github">
             <a href="https://github.com/hai-27/vue-store" target="_blank">
@@ -99,11 +55,11 @@
             <p>
               <router-link to="/">首页</router-link>
               <span>|</span>
-              <router-link to="/goods">全部商品</router-link>
-              <span>|</span>
+              <!-- <router-link to="/goods">全部商品</router-link> -->
+              <!-- <span>|</span> -->
               <router-link to="/about">关于我们</router-link>
             </p>
-            <p class="coty">商城版权所有 &copy; 2012-2021</p>
+            <p class="coty">商城版权所有 &copy; 2012-2024</p>
           </div>
         </div>
       </el-footer>
@@ -134,18 +90,6 @@ export default {
       // 如果已经登录，设置vuex登录状态
       this.setUser(JSON.parse(localStorage.getItem("user")));
     }
-    /* window.setTimeout(() => {
-      this.$message({
-        duration: 0,
-        showClose: true,
-        message: `
-        <p>如果觉得这个项目还不错，</p>
-        <p style="padding:10px 0">您可以给项目源代码仓库点Star支持一下，谢谢！</p>
-        <p><a href="https://github.com/hai-27/vue-store" target="_blank">Github传送门</a></p>`,
-        dangerouslyUseHTMLString: true,
-        type: "success"
-      });
-    }, 1000 * 60); */
   },
   computed: {
     ...mapGetters(["getUser", "getNum"])
@@ -324,17 +268,7 @@ a:hover {
   border-bottom: 1px solid #3d3d3d;
   line-height: 145px;
 }
-.footer .ng-promise-box .ng-promise p a {
-  color: #fff;
-  font-size: 20px;
-  margin-right: 210px;
-  padding-left: 44px;
-  height: 40px;
-  display: inline-block;
-  line-height: 40px;
-  text-decoration: none;
-  background: url("./assets/imgs/us-icon.png") no-repeat left 0;
-}
+
 .footer .github {
   height: 50px;
   line-height: 50px;

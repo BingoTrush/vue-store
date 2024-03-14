@@ -7,16 +7,12 @@
       </div>
     </div>
     <div class="about-content">
-      <MyMarkdown></MyMarkdown>
+      
     </div>
   </div>
 </template>
 <script>
-import MyMarkdown from "../components/MyMarkdown";
 export default {
-  components: {
-    MyMarkdown
-  }
 };
 </script>
 <style scoped>
