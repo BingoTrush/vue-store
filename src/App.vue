@@ -20,7 +20,6 @@
             </router-link>
           </div>
           <el-menu-item index="/">首页</el-menu-item>
-          <!-- <el-menu-item index="/goods">全部商品</el-menu-item> -->
           <el-menu-item index="/about">关于我们</el-menu-item>
         </el-menu>
       </el-header>
@@ -38,13 +37,6 @@
       <el-footer>
         <div class="footer">
           <div class="ng-promise-box">
-            <!-- <div class="ng-promise">
-              <p class="text">
-                <a class="icon1" href="javascript:;">7天无理由退换货</a>
-                <a class="icon2" href="javascript:;">满99元全场免邮</a>
-                <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
-              </p>
-            </div> -->
           </div>
           <div class="github">
             <a href="https://github.com/hai-27/vue-store" target="_blank">
@@ -55,11 +47,9 @@
             <p>
               <router-link to="/">首页</router-link>
               <span>|</span>
-              <!-- <router-link to="/goods">全部商品</router-link> -->
-              <!-- <span>|</span> -->
               <router-link to="/about">关于我们</router-link>
             </p>
-            <p class="coty">商城版权所有 &copy; 2012-2024</p>
+            <p class="coty">版权所有 &copy; 2012-2024</p>
           </div>
         </div>
       </el-footer>
@@ -69,9 +59,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapGetters } from "vuex";
-
 export default {
   beforeUpdate() {
     this.activeIndex = this.$route.path;
@@ -79,75 +66,7 @@ export default {
   data() {
     return {
       activeIndex: "", // 头部导航栏选中的标签
-      search: "", // 搜索条件
-      register: false, // 是否显示注册组件
-      visible: false // 是否退出登录
     };
-  },
-  created() {
-    // 获取浏览器localStorage，判断用户是否已经登录
-    if (localStorage.getItem("user")) {
-      // 如果已经登录，设置vuex登录状态
-      this.setUser(JSON.parse(localStorage.getItem("user")));
-    }
-  },
-  computed: {
-    ...mapGetters(["getUser", "getNum"])
-  },
-  watch: {
-    // 获取vuex的登录状态
-    getUser: function(val) {
-      if (val === "") {
-        // 用户没有登录
-        this.setShoppingCart([]);
-      } else {
-        // 用户已经登录,获取该用户的购物车信息
-        this.$axios
-          .post("/api/user/shoppingCart/getShoppingCart", {
-            user_id: val.user_id
-          })
-          .then(res => {
-            if (res.data.code === "001") {
-              // 001 为成功, 更新vuex购物车状态
-              this.setShoppingCart(res.data.shoppingCartData);
-            } else {
-              // 提示失败信息
-              this.notifyError(res.data.msg);
-            }
-          })
-          .catch(err => {
-            return Promise.reject(err);
-          });
-      }
-    }
-  },
-  methods: {
-    ...mapActions(["setUser", "setShowLogin", "setShoppingCart"]),
-    login() {
-      // 点击登录按钮, 通过更改vuex的showLogin值显示登录组件
-      this.setShowLogin(true);
-    },
-    // 退出登录
-    logout() {
-      this.visible = false;
-      // 清空本地登录信息
-      localStorage.setItem("user", "");
-      // 清空vuex登录信息
-      this.setUser("");
-      this.notifySucceed("成功退出登录");
-    },
-    // 接收注册子组件传过来的数据
-    isRegister(val) {
-      this.register = val;
-    },
-    // 点击搜索按钮
-    searchClick() {
-      if (this.search != "") {
-        // 跳转到全部商品页面,并传递搜索条件
-        this.$router.push({ path: "/goods", query: { search: this.search } });
-        this.search = "";
-      }
-    }
   }
 };
 </script>
